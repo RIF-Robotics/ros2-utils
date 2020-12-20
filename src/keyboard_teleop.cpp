@@ -1,10 +1,22 @@
-#include <cstdio>
+// #############################################################################
+// keyboard_teleop.cpp
+//
+// Node allows user to publish Twist commands to a topic (default: /cmd_vel).
+// #############################################################################
 
-int main(int argc, char ** argv) {
+#include "rif-ros2-utils/keyboard_teleop.h"
 
-    (void) argc;
-    (void) argv;
+void KeyboardTeleop::timer_callback() {
+    auto message = std_msgs::msg::String();
+    message.data = "Hello, world! " + std::to_string(count_++);
+    RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", message.data.c_str());
+    publisher_->publish(message);
+}
 
-    printf("hello world rif-ros2-utils package\n");
+// --------------------------
+int main(int argc, char * argv[]) {
+    rclcpp::init(argc, argv);
+    rclcpp::spin(std::make_shared<KeyboardTeleop>());
+    rclcpp::shutdown();
     return 0;
 }
