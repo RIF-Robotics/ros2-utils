@@ -16,18 +16,25 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 # find dependencies
+find_package(Curses)
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
-find_package(std_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
 
-add_executable(keyboard_teleop src/keyboard_teleop.cpp)
-ament_target_dependencies(keyboard_teleop rclcpp std_msgs)
-target_include_directories(keyboard_teleop PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
+if(${CURSES_FOUND})
+  add_executable(keyboard_teleop src/keyboard_teleop.cpp)
+  ament_target_dependencies(keyboard_teleop rclcpp geometry_msgs)
+  target_link_libraries(keyboard_teleop -lncurses)
+  target_include_directories(keyboard_teleop PUBLIC
+    ${CURSES_INCLUDE_DIR}
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>)
 
-install(TARGETS keyboard_teleop
-  DESTINATION lib/${PROJECT_NAME})
+  install(TARGETS keyboard_teleop
+    DESTINATION lib/${PROJECT_NAME})
+else()
+  message(WARNING "libncurses5-dev library NOT found. NOT building keyboard_teleop node.")
+endif()
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
