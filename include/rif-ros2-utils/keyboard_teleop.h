@@ -15,10 +15,7 @@
 class KeyboardTeleop : public rclcpp::Node
 {
 public:
-    KeyboardTeleop() : Node("keyboard_teleop") {
-        cmd_vel_pub_ = this->create_publisher<geometry_msgs::msg::Twist>(topic_name, 1);
-        read_arrow_keys();
-    }
+    KeyboardTeleop();
 
 private:
     std::string topic_name = "/cmd_vel";
