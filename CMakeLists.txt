@@ -36,9 +36,9 @@ else()
   message(WARNING "libncurses5-dev library NOT found. NOT building keyboard_teleop node.")
 endif()
 
-# allow colcon to find the launch files
-install(DIRECTORY launch
-  DESTINATION share/${PROJECT_NAME})
+# # uncomment to allow colcon to find the launch files
+# install(DIRECTORY launch
+#   DESTINATION share/${PROJECT_NAME})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
