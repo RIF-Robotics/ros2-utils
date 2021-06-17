@@ -12,5 +12,5 @@ The following are the nodes currently available:
   ```
   $ source /opt/ros/foxy/setup.bash
   $ source /path/to/workspace/install/local_setup.bash
-  $ ros2 run rif-ros2-utils keyboard_teleop
+  $ ros2 run rif-ros2-utils keyboard_teleop --ros-args -r /cmd_vel:=[NEW TOPIC NAME]
   ```
