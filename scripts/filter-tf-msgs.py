@@ -33,7 +33,7 @@ class tfMsgFilter(Node):
                              'or_scissors_det', \
                              'dressing_forceps_det']
 
-        self.pub_filtered_tf = self.create_publisher(TFMessage.msg, 'tf', 10)
+        self.pub_filtered_tf = self.create_publisher(TFMessage, 'tf', 10)
 
         self.subscription = self.create_subscription(
             TFMessage, '/tf_original',
