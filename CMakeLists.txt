@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(rif-ros2-utils)
+project(rif_ros2_utils)
 
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -38,7 +38,7 @@ ament_python_install_package(${PROJECT_NAME})
 
 # Install Python executables
 install(PROGRAMS
-  scripts/flter-tf-msgs.py
+  scripts/filter-tf-msgs.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
