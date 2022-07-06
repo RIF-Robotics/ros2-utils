@@ -41,14 +41,17 @@ class tfMsgFilter(Node):
 
 
     def tf_callback(self, msg):
+
+        tf_msg = TFMessage()
+        tf_msg.header = msg.header
+
         for t in msg.transforms:
-            # debug
-            print(t)
+            if msg.child_frame_id in self.filter_value:
+                continue
+            tf_msg.child_frame_id = msg.child_frame_id
+            tf_msg.transform = msg.transform
 
-
-        # # TODO: construct the new tf message and publish
-        # msg = TFMessage()
-        # self.pub_filtered_tf.publish(msg)
+            self.pub_filtered_tf.publish(tf_msg)
 
 
 def main(args=None):
