@@ -12,6 +12,7 @@ import rclpy
 from rclpy.node import Node
 
 from tf2_msgs.msg import TFMessage
+from geometry_msgs.msg import TransformStamped
 
 class tfMsgFilter(Node):
     def __init__(self):
@@ -41,17 +42,17 @@ class tfMsgFilter(Node):
 
 
     def tf_callback(self, msg):
-
         tf_msg = TFMessage()
-        tf_msg.header = msg.header
-
         for t in msg.transforms:
-            if msg.child_frame_id in self.filter_value:
+            if t.child_frame_id in self.filter_value:
                 continue
-            tf_msg.child_frame_id = msg.child_frame_id
-            tf_msg.transform = msg.transform
+            transform_msg = TransformStamped()
+            transform_msg.header = t.header
+            transform_msg.child_frame_id = t.child_frame_id
+            transform_msg.transform = t.transform
+            tf_msg.transforms.append(transform_msg)
 
-            self.pub_filtered_tf.publish(tf_msg)
+        self.pub_filtered_tf.publish(tf_msg)
 
 
 def main(args=None):
