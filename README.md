@@ -14,3 +14,5 @@ The following are the nodes currently available:
   $ source /path/to/workspace/install/local_setup.bash
   $ ros2 run rif-ros2-utils keyboard_teleop --ros-args -r /cmd_vel:=[NEW TOPIC NAME]
   ```
+* **compress_image**: Subscribe to a `sensor_msgs/Image` topic, compress the
+  image, and publish to a `sensor_msgs/CompressedImage` topic.

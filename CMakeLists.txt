@@ -12,6 +12,9 @@ find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_python REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(geometry_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
+find_package(cv_bridge REQUIRED)
+find_package(OpenCV REQUIRED)
 
 if(${CURSES_FOUND})
   add_executable(keyboard_teleop src/keyboard_teleop.cpp)
@@ -27,6 +30,23 @@ if(${CURSES_FOUND})
 else()
   message(WARNING "libncurses5-dev library NOT found. NOT building keyboard_teleop node.")
 endif()
+
+
+add_executable(compress_image
+  src/compress_image.cpp)
+target_include_directories(compress_image
+  PUBLIC include)
+ament_target_dependencies(compress_image
+  rclcpp
+  sensor_msgs
+  cv_bridge
+  OpenCV
+  )
+
+install(TARGETS compress_image
+  DESTINATION lib/${PROJECT_NAME}
+  )
+
 
 # # uncomment to install launch and/or rviz directories
 # install(DIRECTORY launch rviz
