@@ -28,7 +28,7 @@ class MsgToAction(Node):
         goal_msg = AssembleTray.Goal()
         goal_msg.order = 0
 
-        if msg.data is not "activate":
+        if msg.data != "activate":
             self.get_logger().warn('Unexptected msg heard on trigger node: {}'.format(msg.data))
             return
 
