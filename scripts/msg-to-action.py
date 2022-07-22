@@ -28,6 +28,10 @@ class MsgToAction(Node):
         goal_msg = AssembleTray.Goal()
         goal_msg.order = 0
 
+        if msg.data is not "activate":
+            self.get_logger().warn('Unexptected msg heard on trigger node: {}'.format(msg.data))
+            return
+
         self._action_client.wait_for_server()
 
         return self._action_client.send_goal_async(goal_msg)
