@@ -48,7 +48,8 @@ class AssembleTrayActionClient(Node):
         goal_msg = AssembleTray.Goal()
         goal_msg.order = 0
         self._action_client.wait_for_server()
-        self._assembly_future = self._action_client.send_goal_async(goal_msg)
+        self._assembly_future = self._action_client.send_goal_async(
+            goal_msg, feedback_callback=self.feedback_callback)
         self._assembly_future.add_done_callback(self.assembly_response_callback)
 
 
@@ -72,6 +73,10 @@ class AssembleTrayActionClient(Node):
             self.get_logger().info('Goal succeeded! Result: {}'.format(result))
         else:
             self.get_logger().info('Goal failed with status: {}'.format(status))
+
+
+    def feedback_callback(self, feedback):
+        self.get_logger().info('Received feedback: {}'.format(feedback.feedback))
 
 
     def cancel_assembly(self):
