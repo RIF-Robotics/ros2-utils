@@ -15,9 +15,9 @@ from rclpy.action import ActionServer, ActionClient
 from std_msgs.msg import String, Bool
 from rif_pick_and_place_msgs.action import AssembleTray
 
-class MsgToAction(Node):
+class AssembleTrayActionClient(Node):
     def __init__(self):
-        super().__init__('msg_to_action')
+        super().__init__('assemble_tray_action_client')
 
         self._goal_handle = None
         self._action_client = ActionClient(self, AssembleTray, 'assemble_tray')
@@ -30,7 +30,7 @@ class MsgToAction(Node):
 
 
     def command_callback(self, msg):
-        self.get_logger().info('Assembly action message received: {}'.format(msg.data))
+        self.get_logger().info('Message received: {}'.format(msg.data))
 
         if msg.data == "activate":
             self.trigger_assembly()
@@ -90,10 +90,10 @@ class MsgToAction(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    msg_to_action = MsgToAction()
+    assemble_tray_action_client = AssembleTrayActionClient()
 
     try:
-        rclpy.spin(msg_to_action)
+        rclpy.spin(assemble_tray_action_client)
     except KeyboardInterrupt:
         pass
 
