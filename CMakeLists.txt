@@ -59,6 +59,7 @@ ament_python_install_package(${PROJECT_NAME})
 # Install Python executables
 install(PROGRAMS
   scripts/filter-tf-msgs.py
+  scripts/check-sync-topics.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
